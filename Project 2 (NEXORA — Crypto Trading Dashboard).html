@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEXORA — Crypto Trading Dashboard</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#050608;color:#f5f5f7;font-family:Inter,Arial,sans-serif}
+body:before{content:"";position:fixed;inset:-20%;z-index:-2;background:radial-gradient(circle at 20% 15%,#6d28d933,transparent 25%),radial-gradient(circle at 80% 10%,#00e5ff22,transparent 24%),radial-gradient(circle at 70% 80%,#ff2bd622,transparent 28%);filter:blur(50px)}
+.wrap{max-width:1500px;margin:auto;padding:0 25px}nav{height:72px;border-bottom:1px solid #ffffff12;background:#07080bcc;backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5}
+.logo{font-weight:950;font-size:22px;letter-spacing:-1px}.logo i{font-style:normal;background:linear-gradient(90deg,#b86cff,#00e5ff,#65ff8f);-webkit-background-clip:text;color:transparent}
+.nav{display:flex;gap:25px;color:#999aa5;font-size:13px}.nav a:hover{color:#fff}.account{padding:10px 15px;border:1px solid #ffffff17;border-radius:12px;background:#ffffff08}
+.layout{display:grid;grid-template-columns:220px 1fr;min-height:calc(100vh - 72px)}aside{border-right:1px solid #ffffff10;padding:25px 14px}.side-title{color:#666875;font-size:10px;text-transform:uppercase;letter-spacing:2px;margin:18px 10px 10px}.side a{display:block;padding:12px 13px;color:#a7a8b2;border-radius:12px;font-size:13px;margin:3px 0}.side a.active,.side a:hover{background:linear-gradient(90deg,#ffffff12,#ffffff04);color:white}.main{padding:28px}
+.top{display:flex;justify-content:space-between;align-items:end;margin-bottom:20px}.eyebrow{color:#8b7cff;font-size:11px;font-weight:900;letter-spacing:2px}.top h1{font-size:34px;letter-spacing:-2px;margin:6px 0}.status{font-size:11px;color:#6dff9a}.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#5dff8d;margin-right:6px;box-shadow:0 0 12px #5dff8d}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.stat,.panel{background:linear-gradient(145deg,#ffffff09,#ffffff03);border:1px solid #ffffff12;border-radius:17px;box-shadow:0 15px 50px #0008}.stat{padding:17px}.stat small{color:#777986;font-size:11px}.stat strong{display:block;font-size:22px;margin-top:8px}.up{color:#55ee9a}.down{color:#ff637e}
+.dashboard{display:grid;grid-template-columns:1.5fr .7fr;gap:15px;margin-top:15px}.panel{padding:18px}.panel-head{display:flex;justify-content:space-between;align-items:center}.panel h2{font-size:15px;margin:0}.muted{color:#777986;font-size:11px}
+.chart{height:340px;margin-top:10px;position:relative;overflow:hidden;border-radius:12px;background:linear-gradient(#ffffff06 1px,transparent 1px),linear-gradient(90deg,#ffffff06 1px,transparent 1px);background-size:100% 55px,75px 100%}
+svg{width:100%;height:100%}.glow{filter:drop-shadow(0 0 7px #9f6bff)}.tabs{display:flex;gap:15px;margin:14px 0;color:#666976;font-size:11px}.tabs b{color:white}
+.order{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:15px}.order button{border:0;border-radius:11px;padding:11px;font-weight:800;background:#5df39b;color:#07100b}.order button:last-child{background:#ff5573;color:white}
+.table{margin-top:15px}.row{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr .7fr;align-items:center;padding:13px 5px;border-bottom:1px solid #ffffff0b;font-size:12px}.row.head{color:#666976;font-size:10px;text-transform:uppercase}.coin{display:flex;gap:9px;align-items:center}.coin-icon{width:29px;height:29px;border-radius:9px;background:linear-gradient(135deg,#8b5cf6,#00d9ff);display:grid;place-items:center;font-weight:900;font-size:10px}
+.book .row{grid-template-columns:1fr 1fr 1fr}.book .sell{color:#ff667f}.book .buy{color:#55ed9b}
+.news{margin-top:15px}.news-item{padding:13px 0;border-bottom:1px solid #ffffff0b}.news-item b{font-size:12px;line-height:1.4;display:block}.news-item span{color:#676a78;font-size:10px;display:block;margin-top:6px}
+.mini-chart{height:40px}.badge{font-size:9px;padding:5px 7px;border-radius:7px;background:#ffffff0c;color:#aaa}
+footer{text-align:right;color:#5d5f6b;font-size:11px;padding:28px 0}.credit{color:#c9c9d2}.credit span{background:linear-gradient(90deg,#ff55c8,#7d6bff,#00e5ff);-webkit-background-clip:text;color:transparent;font-weight:900}
+@media(max-width:1050px){.layout{grid-template-columns:80px 1fr}.side-title,.side a span{display:none}.side a{text-align:center}.dashboard{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}}@media(max-width:650px){.nav{display:none}.main{padding:18px}.layout{display:block}aside{display:none}.stats{grid-template-columns:1fr 1fr}.row{grid-template-columns:1.5fr 1fr 1fr}.row>*:nth-child(4),.row>*:nth-child(5){display:none}.top{display:block}}
+</style>
+</head>
+<body>
+<nav><div class="wrap" style="width:100%;display:flex;justify-content:space-between;align-items:center"><div class="logo">NEX<i>ORA</i></div><div class="nav"><a href="#">Markets</a><a href="#">Trade</a><a href="#">Earn</a><a href="#">Discover</a></div><div class="account">◎ Account</div></div></nav>
+<div class="wrap layout">
+<aside><div class="side-title">Workspace</div><div class="side"><a class="active" href="#">◈ <span>Dashboard</span></a><a href="#">⌁ <span>Markets</span></a><a href="#">↗ <span>Trade</span></a><a href="#">▣ <span>Portfolio</span></a></div><div class="side-title">Explore</div><div class="side"><a href="#">✦ <span>Discover</span></a><a href="#">◉ <span>Watchlist</span></a><a href="#">◌ <span>News</span></a><a href="#">⚙ <span>Settings</span></a></div></aside>
+<main class="main">
+<div class="top"><div><div class="eyebrow">MARKET TERMINAL</div><h1>Trading Dashboard</h1></div><div class="status"><span class="dot"></span>Markets live</div></div>
+<div class="stats">
+<div class="stat"><small>Total Portfolio</small><strong>$248,690.42</strong><span class="up">+12.84% ↗</span></div>
+<div class="stat"><small>24h Volume</small><strong>$89.42B</strong><span class="up">+6.21%</span></div>
+<div class="stat"><small>BTC Dominance</small><strong>58.42%</strong><span class="up">+0.31%</span></div>
+<div class="stat"><small>Open Positions</small><strong>24</strong><span class="badge">12 profitable</span></div>
+</div>
+<div class="dashboard">
+<section class="panel"><div class="panel-head"><div><h2>BTC / USDT</h2><div class="muted">Bitcoin · Spot Market</div></div><div><strong style="font-size:24px">$67,842.19</strong> <span class="up">+4.82%</span></div></div>
+<div class="tabs"><b>1H</b><span>4H</span><span>1D</span><span>1W</span><span>1M</span></div>
+<div class="chart">
+<svg viewBox="0 0 800 330" preserveAspectRatio="none">
+<defs><linearGradient id="g" x1="0" x2="1"><stop stop-color="#b66cff"/><stop offset=".5" stop-color="#00e5ff"/><stop offset="1" stop-color="#61ff9a"/></linearGradient><linearGradient id="fill" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#8b5cf6" stop-opacity=".3"/><stop offset="1" stop-color="#8b5cf6" stop-opacity="0"/></linearGradient></defs>
+<path d="M0 270 L55 245 L100 258 L150 205 L195 220 L240 150 L280 175 L330 115 L370 142 L420 98 L470 135 L515 80 L555 110 L600 62 L645 95 L690 42 L735 70 L800 18 L800 330 L0 330Z" fill="url(#fill)"/>
+<path class="glow" d="M0 270 L55 245 L100 258 L150 205 L195 220 L240 150 L280 175 L330 115 L370 142 L420 98 L470 135 L515 80 L555 110 L600 62 L645 95 L690 42 L735 70 L800 18" fill="none" stroke="url(#g)" stroke-width="4"/>
+</svg></div>
+<div class="order"><button>BUY BTC</button><button>SELL BTC</button></div></section>
+<section class="panel book"><div class="panel-head"><h2>Order Book</h2><span class="muted">0.01 BTC</span></div>
+<div class="row head"><span>Price</span><span>Size</span><span>Total</span></div>
+<div class="row sell"><span>67,911.42</span><span>0.842</span><span>57,189</span></div><div class="row sell"><span>67,892.20</span><span>1.182</span><span>80,228</span></div><div class="row sell"><span>67,870.12</span><span>0.492</span><span>33,395</span></div><div style="padding:15px 0;font-size:18px;color:#55ed9b">67,842.19 <small>≈ $67,842</small></div>
+<div class="row buy"><span>67,828.10</span><span>1.094</span><span>74,203</span></div><div class="row buy"><span>67,801.55</span><span>0.781</span><span>52,968</span></div><div class="row buy"><span>67,774.30</span><span>1.430</span><span>96,837</span></div></section>
+</div>
+
+<section class="panel table"><div class="panel-head"><h2>Markets · 1,000+ assets</h2><span class="muted">Search all markets ⌕</span></div>
+<div class="row head"><span>Asset</span><span>Last Price</span><span>24h Change</span><span>24h Volume</span><span>Chart</span></div>
+<div class="row"><div class="coin"><div class="coin-icon">BTC</div><div><b>Bitcoin</b><div class="muted">BTC / USDT</div></div></div><b>$67,842.19</b><span class="up">+4.82%</span><span>$42.8B</span><span class="up">↗</span></div>
+<div class="row"><div class="coin"><div class="coin-icon">ETH</div><div><b>Ethereum</b><div class="muted">ETH / USDT</div></div></div><b>$3,842.77</b><span class="up">+3.16%</span><span>$21.4B</span><span class="up">↗</span></div>
+<div class="row"><div class="coin"><div class="coin-icon">SOL</div><div><b>Solana</b><div class="muted">SOL / USDT</div></div></div><b>$186.42</b><span class="down">-1.24%</span><span>$7.8B</span><span class="down">↘</span></div>
+<div class="row"><div class="coin"><div class="coin-icon">XRP</div><div><b>XRP</b><div class="muted">XRP / USDT</div></div></div><b>$2.84</b><span class="up">+8.41%</span><span>$5.2B</span><span class="up">↗</span></div>
+<div class="row"><div class="coin"><div class="coin-icon">ADA</div><div><b>Cardano</b><div class="muted">ADA / USDT</div></div></div><b>$0.742</b><span class="up">+2.06%</span><span>$1.9B</span><span class="up">↗</span></div>
+</section>
+
+<section class="panel news"><div class="panel-head"><h2>Market Intelligence</h2><span class="muted">Latest insights</span></div>
+<div class="news-item"><b>Bitcoin momentum strengthens as liquidity returns to major crypto markets</b><span>MARKET UPDATE · 18 MIN AGO</span></div>
+<div class="news-item"><b>Layer-1 activity accelerates across major ecosystems</b><span>ON-CHAIN · 42 MIN AGO</span></div>
+<div class="news-item"><b>Traders watch volatility after a strong weekly breakout</b><span>ANALYSIS · 1 HR AGO</span></div></section>
+<footer>Concept interface · <span class="credit">Design by <span>Rakhi</span></span></footer>
+</main></div>
+</body></html>

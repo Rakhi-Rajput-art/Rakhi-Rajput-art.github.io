@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VIBRA — Digital Discovery Platform</title>
+<style>
+:root{
+  --bg:#090812; --card:rgba(255,255,255,.075); --line:rgba(255,255,255,.12);
+  --text:#fff; --muted:#aaa8bb; --pink:#ff4fd8; --cyan:#49e7ff; --violet:#8b5cf6; --lime:#b8ff4d;
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at 80% 0%,#30205d 0,transparent 32%),radial-gradient(circle at 0 30%,#102e45 0,transparent 28%),var(--bg);color:var(--text);font-family:Inter,Arial,sans-serif}
+a{text-decoration:none;color:inherit}.wrap{max-width:1240px;margin:auto;padding:0 28px}
+nav{height:78px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10;background:rgba(9,8,18,.72);backdrop-filter:blur(20px);border-bottom:1px solid var(--line)}
+.logo{font-size:25px;font-weight:900;letter-spacing:-1px}.logo span{color:var(--pink)}
+.navlinks{display:flex;gap:28px;color:#c9c6d5;font-size:14px}.navlinks a:hover{color:white}
+.btn{border:1px solid var(--line);padding:11px 17px;border-radius:14px;background:rgba(255,255,255,.07);font-weight:700;font-size:13px}
+.hero{min-height:610px;display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;padding:70px 0}
+.badge{display:inline-flex;padding:8px 13px;border-radius:99px;background:rgba(255,79,216,.12);border:1px solid rgba(255,79,216,.3);color:#ff9ceb;font-size:12px;font-weight:800}
+h1{font-size:clamp(52px,7vw,92px);line-height:.91;letter-spacing:-5px;margin:22px 0}
+h1 .grad{background:linear-gradient(90deg,var(--pink),var(--cyan),var(--lime));-webkit-background-clip:text;color:transparent}
+.hero p{max-width:600px;color:var(--muted);font-size:18px;line-height:1.7}
+.actions{display:flex;gap:12px;margin-top:28px}.primary{background:linear-gradient(110deg,var(--pink),var(--violet));border:0;padding:14px 21px;border-radius:15px;font-weight:900}
+.visual{height:450px;position:relative;border-radius:35px;background:linear-gradient(145deg,#261d42,#101527);border:1px solid var(--line);overflow:hidden;box-shadow:0 30px 80px #0008}
+.blob{position:absolute;border-radius:50%;filter:blur(4px)}.b1{width:220px;height:220px;background:#ff3fc8;right:-30px;top:-30px}.b2{width:190px;height:190px;background:#35dfff;left:-45px;bottom:-55px}.phone{position:absolute;width:245px;height:390px;right:80px;top:34px;border:8px solid #16151e;border-radius:34px;background:#11101a;box-shadow:0 20px 50px #0009;overflow:hidden}
+.phone-top{height:25px;background:#222}.screen{padding:15px}.mini-logo{font-weight:900;font-size:18px}.mini-logo span{color:var(--pink)}
+.wall{height:150px;margin-top:14px;border-radius:20px;background:linear-gradient(140deg,#ff3da9,#733dff 48%,#36eaff);position:relative;overflow:hidden}.wall:after{content:"VIBRA";position:absolute;bottom:12px;left:14px;font-weight:900;font-size:27px;letter-spacing:-2px}
+.mini-row{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:10px}.mini-card{height:72px;border-radius:14px;background:linear-gradient(135deg,#302d51,#1b2032);border:1px solid #ffffff18}
+section{padding:80px 0}.section-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:28px}.eyebrow{color:var(--cyan);font-weight:900;font-size:12px;text-transform:uppercase;letter-spacing:2px}h2{font-size:42px;letter-spacing:-2px;margin:8px 0}.section-head p{color:var(--muted);max-width:450px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.card{border:1px solid var(--line);background:var(--card);border-radius:24px;padding:16px;backdrop-filter:blur(15px);transition:.25s}.card:hover{transform:translateY(-6px);border-color:#ffffff32}
+.thumb{height:205px;border-radius:18px;position:relative;overflow:hidden}.thumb:after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 45%,#0009)}
+.w1{background:linear-gradient(135deg,#ff3b9d,#5d3dff,#20dff0)}.w2{background:radial-gradient(circle at 25% 30%,#fff 0 2%,transparent 3%),linear-gradient(135deg,#090a12,#31364d)}.w3{background:linear-gradient(140deg,#ff8a00,#ff236d 48%,#7c31ff)}.w4{background:linear-gradient(140deg,#001f34,#00d4ff,#1c004f)}
+.tag{position:absolute;z-index:2;top:11px;left:11px;background:#0008;padding:6px 9px;border-radius:9px;font-size:10px;font-weight:800}.card h3{margin:14px 0 5px}.meta{color:var(--muted);font-size:12px}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.feature{padding:26px;border-radius:25px;background:linear-gradient(145deg,#ffffff0d,#ffffff04);border:1px solid var(--line)}.icon{font-size:28px}.feature h3{margin:16px 0 8px}.feature p{color:var(--muted);line-height:1.6;font-size:14px}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:20px}.news{display:flex;gap:15px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}.news:last-child{border:0}.news-img{width:90px;height:70px;border-radius:14px;flex:none;background:linear-gradient(135deg,#ff4fd8,#31ddff)}
+.game{min-height:230px;background:linear-gradient(135deg,#1a1231,#121c31);border-radius:25px;border:1px solid var(--line);padding:24px;position:relative;overflow:hidden}.game strong{font-size:28px}.game p{color:var(--muted);max-width:300px;line-height:1.5}.game .orb{position:absolute;width:180px;height:180px;border-radius:50%;background:linear-gradient(135deg,var(--lime),var(--cyan));right:-45px;bottom:-60px;filter:blur(1px)}
+footer{border-top:1px solid var(--line);padding:45px 0;color:var(--muted);display:flex;justify-content:space-between}.credit{color:white;font-weight:800}.credit span{color:var(--pink)}
+@media(max-width:850px){.hero,.split{grid-template-columns:1fr}.visual{height:390px}.phone{right:50%;transform:translateX(50%)}.grid{grid-template-columns:repeat(2,1fr)}.features{grid-template-columns:1fr}.navlinks{display:none}}
+@media(max-width:520px){.wrap{padding:0 17px}.hero{padding:45px 0}h1{font-size:54px}.grid{grid-template-columns:1fr}.section-head{display:block}.section-head p{margin-top:12px}}
+</style>
+</head>
+<body>
+<nav><div class="wrap" style="width:100%;display:flex;align-items:center;justify-content:space-between"><a class="logo" href="#">VI<span>BRA</span></a><div class="navlinks"><a href="#wallpapers">Wallpapers</a><a href="#games">Games</a><a href="#news">News</a><a href="#discover">Discover</a></div><a class="btn" href="#wallpapers">Explore ↗</a></div></nav>
+
+<main class="wrap">
+<section class="hero">
+<div>
+<div class="badge">✦ YOUR DIGITAL PLAYGROUND</div>
+<h1>Make your<br><span class="grad">screen alive.</span></h1>
+<p>Discover glossy wallpapers, fresh games, trending stories and creative digital experiences — all in one colorful platform.</p>
+<div class="actions"><a class="primary" href="#wallpapers">Explore Wallpapers</a><a class="btn" href="#games">Play & Discover</a></div>
+</div>
+<div class="visual"><div class="blob b1"></div><div class="blob b2"></div><div class="phone"><div class="phone-top"></div><div class="screen"><div class="mini-logo">VI<span>BRA</span></div><div class="wall"></div><div class="mini-row"><div class="mini-card"></div><div class="mini-card"></div></div><div class="mini-row"><div class="mini-card"></div><div class="mini-card"></div></div></div></div></div>
+</section>
+
+<section id="wallpapers">
+<div class="section-head"><div><div class="eyebrow">Wallpaper Hub</div><h2>Fresh for your screen.</h2></div><p>Curated visuals made for phones, desktops, gaming setups and every mood.</p></div>
+<div class="grid">
+<div class="card"><div class="thumb w1"><span class="tag">AMOLED</span></div><h3>Neon Pulse</h3><div class="meta">4K • Mobile • 12K downloads</div></div>
+<div class="card"><div class="thumb w2"><span class="tag">DARK</span></div><h3>Midnight Space</h3><div class="meta">4K • Desktop • 8.4K downloads</div></div>
+<div class="card"><div class="thumb w3"><span class="tag">VIBRANT</span></div><h3>Solar Rush</h3><div class="meta">4K • Mobile • 6.8K downloads</div></div>
+<div class="card"><div class="thumb w4"><span class="tag">CYBER</span></div><h3>Cyber Ocean</h3><div class="meta">8K • Desktop • 15K downloads</div></div>
+</div>
+</section>
+
+<section id="discover">
+<div class="section-head"><div><div class="eyebrow">Why VIBRA</div><h2>One place. More vibes.</h2></div></div>
+<div class="features">
+<div class="feature"><div class="icon">🖼️</div><h3>Instant Downloads</h3><p>Find your favorite wallpaper and download it in seconds with a clean, frictionless experience.</p></div>
+<div class="feature"><div class="icon">🎮</div><h3>Game Discovery</h3><p>Explore new games, mini-game concepts, trending releases and gaming communities.</p></div>
+<div class="feature"><div class="icon">⚡</div><h3>Personal Feed</h3><p>A smart discovery feed that brings together wallpapers, games, news and digital culture.</p></div>
+</div>
+</section>
+
+<section id="games">
+<div class="section-head"><div><div class="eyebrow">Game Zone</div><h2>Ready. Set. Play.</h2></div><p>Quick games, trending titles and fresh ideas for your next gaming session.</p></div>
+<div class="split">
+<div class="game"><strong>Neon Runner</strong><p>Dash through a glowing city, collect energy and beat your high score.</p><a class="btn" href="#">Play Demo →</a><div class="orb"></div></div>
+<div class="game"><strong>Color Clash</strong><p>Match, react and survive. A tiny colorful game built for fast sessions.</p><a class="btn" href="#">Try Game →</a><div class="orb"></div></div>
+</div>
+</section>
+
+<section id="news">
+<div class="section-head"><div><div class="eyebrow">Trending News</div><h2>What's buzzing.</h2></div><p>Technology, gaming, AI, design and entertainment — distilled into quick reads.</p></div>
+<div class="card">
+<div class="news"><div class="news-img"></div><div><h3>AI is changing the creative workflow</h3><div class="meta">Technology • 6 min read</div></div></div>
+<div class="news"><div class="news-img" style="background:linear-gradient(135deg,#b8ff4d,#8b5cf6)"></div><div><h3>The next wave of colorful gaming interfaces</h3><div class="meta">Gaming • 4 min read</div></div></div>
+<div class="news"><div class="news-img" style="background:linear-gradient(135deg,#49e7ff,#ff4fd8)"></div><div><h3>Design trends shaping digital products</h3><div class="meta">Design • 5 min read</div></div></div>
+</div>
+</section>
+</main>
+
+<footer class="wrap"><div>© 2026 VIBRA</div><div class="credit">Generated by <span>Rakhi Rajput</span> ✦</div></footer>
+</body>
+</html>

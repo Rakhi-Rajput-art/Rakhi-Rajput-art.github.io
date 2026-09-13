@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SONIQ — Music Platform</title>
+<style>
+:root{
+  --bg:#050507;--panel:#0d0d12;--panel2:#111118;--line:#ffffff10;--text:#f8f7fb;
+  --muted:#8c8a99;--pink:#ff4fd8;--violet:#8b5cf6;--cyan:#41e6ff;--lime:#9bff62;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:
+ radial-gradient(circle at 12% 8%,#ff4fd817,transparent 22%),
+ radial-gradient(circle at 88% 15%,#41e6ff13,transparent 20%),
+ radial-gradient(circle at 50% 90%,#8b5cf610,transparent 25%),var(--bg);
+ color:var(--text);font-family:Inter,Arial,sans-serif;overflow-x:hidden}
+body:after{content:"";position:fixed;inset:0;pointer-events:none;background:linear-gradient(#ffffff03 1px,transparent 1px);background-size:100% 4px;opacity:.25}
+a{text-decoration:none;color:inherit}.wrap{max-width:1480px;margin:auto;padding:0 24px}
+nav{height:74px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;background:#07070ae8;backdrop-filter:blur(18px);position:sticky;top:0;z-index:20}
+.logo{font-size:24px;font-weight:1000;letter-spacing:-1.8px}.logo span{background:linear-gradient(90deg,var(--pink),var(--violet),var(--cyan));-webkit-background-clip:text;color:transparent}
+.nav{display:flex;gap:25px;color:#a8a6b1;font-size:13px}.nav a:hover{color:#fff}
+.user{border:1px solid var(--line);padding:10px 14px;border-radius:12px;background:#ffffff07;font-size:12px}
+.layout{display:grid;grid-template-columns:210px 1fr;min-height:calc(100vh - 74px)}
+aside{border-right:1px solid var(--line);padding:24px 12px}.cap{font-size:10px;color:#61616d;letter-spacing:2px;text-transform:uppercase;margin:18px 9px 10px}
+.side a{display:block;padding:12px;border-radius:12px;color:#96939f;font-size:13px;margin:4px 0}.side a:hover,.side a.active{background:linear-gradient(90deg,#ffffff0d,#ffffff03);color:#fff}
+.main{padding:26px}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}
+.heroCard,.panel{border:1px solid var(--line);background:linear-gradient(145deg,#ffffff08,#ffffff03);border-radius:22px;box-shadow:0 18px 55px #0009}
+.heroCard{padding:28px;min-height:350px;position:relative;overflow:hidden}
+.kicker{font-size:10px;letter-spacing:2px;color:var(--cyan);font-weight:900}.hero h1{font-size:48px;line-height:.95;letter-spacing:-3px;margin:14px 0}.hero h1 span{background:linear-gradient(90deg,var(--pink),var(--violet),var(--cyan));-webkit-background-clip:text;color:transparent}
+.hero p{color:var(--muted);font-size:15px;line-height:1.6;max-width:540px}
+.cta{display:flex;gap:10px;margin-top:20px}.btn{padding:12px 17px;border-radius:13px;border:1px solid var(--line);font-size:12px;font-weight:800;background:#ffffff08}.btn.mainbtn{border:0;background:linear-gradient(100deg,var(--pink),var(--violet));color:white}
+.glow-orb{position:absolute;width:250px;height:250px;border-radius:50%;right:-60px;bottom:-70px;background:radial-gradient(circle,#ff4fd8 0,#8b5cf6 38%,transparent 70%);filter:blur(3px);opacity:.85;animation:float 5s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-18px) scale(1.04)}}
+.player{display:flex;flex-direction:column;justify-content:space-between;min-height:350px;padding:20px}
+.cover{height:205px;border-radius:18px;background:linear-gradient(135deg,#ff41bc,#743cff 45%,#24dcff);position:relative;overflow:hidden;display:flex;align-items:end;padding:18px}
+.cover:before{content:"";position:absolute;width:190px;height:190px;border:30px solid #ffffff24;border-radius:50%;right:-30px;top:-30px;animation:spin 10s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}} .tracktitle{position:relative;font-weight:950;font-size:24px}.trackmeta{font-size:11px;color:#ffffffaa;margin-top:5px}
+.bar{height:4px;background:#ffffff12;border-radius:99px;overflow:hidden;margin:14px 0}.bar i{display:block;height:100%;width:61%;background:linear-gradient(90deg,var(--pink),var(--cyan))}
+.controls{display:flex;align-items:center;justify-content:center;gap:14px}.ctrl{border:0;background:#ffffff08;color:white;width:36px;height:36px;border-radius:50%}.play{width:48px;height:48px;background:linear-gradient(135deg,var(--pink),var(--violet));box-shadow:0 0 30px #ff4fd833}
+.dashboard{display:grid;grid-template-columns:1.35fr .65fr;gap:18px;margin-top:18px}
+.panel{padding:19px}.head{display:flex;justify-content:space-between;align-items:center}.head h2{margin:0;font-size:16px}.mini{font-size:11px;color:var(--muted)}
+.track{display:grid;grid-template-columns:34px 40px 1fr 90px 70px;gap:12px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line);font-size:12px}.track:last-child{border:0}.num{color:#5c5c68}.art{width:40px;height:40px;border-radius:11px;background:linear-gradient(135deg,#f84ac2,#6c55ff);position:relative;overflow:hidden}.art.a2{background:linear-gradient(135deg,#00d9ff,#5c3bff)}.art.a3{background:linear-gradient(135deg,#9bff62,#00b7ff)}.art.a4{background:linear-gradient(135deg,#ff9c3a,#ff3e7a)}.art.a5{background:linear-gradient(135deg,#a86cff,#2720a3)} .meta{color:var(--muted);font-size:10px;margin-top:3px}.time{color:#85838e;text-align:right}
+.spark{height:30px}.spark svg{width:100%;height:100%}
+.section{margin-top:18px}.chips{display:flex;gap:8px;overflow:auto;padding:12px 0}.chip{white-space:nowrap;border:1px solid var(--line);background:#ffffff06;padding:8px 11px;border-radius:999px;font-size:11px;color:#a8a6b1}.chip.hot{color:white;background:linear-gradient(90deg,#ff4fd81c,#8b5cf61c)}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.discover{padding:12px}.discover .pic{height:160px;border-radius:16px;position:relative;overflow:hidden}.p1{background:linear-gradient(135deg,#fc4bbf,#3424a6)}.p2{background:linear-gradient(135deg,#0ce3ff,#1d294d)}.p3{background:linear-gradient(135deg,#ffb63f,#ff356d,#641aff)}.p4{background:linear-gradient(135deg,#a5ff55,#12bff1,#5e41ff)}.discover h3{margin:11px 2px 3px;font-size:13px}.discover .mini{margin:0 2px}
+.multi{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.task{padding:16px;border-radius:17px;background:#ffffff05;border:1px solid var(--line)}.task b{font-size:13px}.task p{font-size:11px;color:var(--muted);line-height:1.5}.meter{height:5px;background:#ffffff0b;border-radius:99px;overflow:hidden}.meter i{display:block;height:100%;background:linear-gradient(90deg,var(--pink),var(--cyan));width:82%}
+.visualizer{height:145px;display:flex;align-items:end;justify-content:center;gap:5px;padding:12px;border-radius:17px;background:radial-gradient(circle at 50% 100%,#8b5cf62e,transparent 55%),#09090d;border:1px solid var(--line);overflow:hidden}
+.wave{width:5px;border-radius:10px 10px 2px 2px;background:linear-gradient(#ff4fd8,#8b5cf6,#41e6ff);animation:bounce .9s ease-in-out infinite alternate}.wave:nth-child(2){animation-delay:.1s}.wave:nth-child(3){animation-delay:.22s}.wave:nth-child(4){animation-delay:.35s}.wave:nth-child(5){animation-delay:.15s}.wave:nth-child(6){animation-delay:.3s}.wave:nth-child(7){animation-delay:.08s}.wave:nth-child(8){animation-delay:.25s}.wave:nth-child(9){animation-delay:.42s}.wave:nth-child(10){animation-delay:.18s}.wave:nth-child(11){animation-delay:.34s}.wave:nth-child(12){animation-delay:.05s}.wave:nth-child(13){animation-delay:.28s}.wave:nth-child(14){animation-delay:.12s}.wave:nth-child(15){animation-delay:.4s}
+@keyframes bounce{from{height:18%}to{height:92%}}
+.newsrow{padding:11px 0;border-bottom:1px solid var(--line)}.newsrow:last-child{border:0}.newsrow b{font-size:11px;display:block;line-height:1.45}.newsrow span{font-size:9px;color:#6f6d79;display:block;margin-top:5px}
+footer{padding:30px 0;text-align:right;color:#63626d;font-size:10px}.credit{color:#d8d7e0}.credit span{background:linear-gradient(90deg,var(--pink),var(--violet),var(--cyan));-webkit-background-clip:text;color:transparent;font-weight:950}
+@media(max-width:1100px){.layout{grid-template-columns:80px 1fr}.cap,.side a span{display:none}.side a{text-align:center}.hero,.dashboard{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:650px){.nav{display:none}.wrap{padding:0 15px}.main{padding:16px}.layout{display:block}aside{display:none}.hero h1{font-size:38px}.grid,.multi{grid-template-columns:1fr}.track{grid-template-columns:25px 40px 1fr 55px}.track>*:nth-child(5){display:none}}
+</style>
+</head>
+<body>
+<nav><div class="wrap" style="width:100%;display:flex;align-items:center;justify-content:space-between">
+<div class="logo">SON<span>IQ</span></div>
+<div class="nav"><a href="#discover">Discover</a><a href="#library">Library</a><a href="#multitask">Multitask</a><a href="#news">Pulse</a></div>
+<div class="user">● RAKHI'S SPACE</div>
+</div></nav>
+
+<div class="wrap layout">
+<aside><div class="cap">Workspace</div><div class="side">
+<a class="active" href="#">◈ <span>Home</span></a><a href="#discover">✦ <span>Discover</span></a><a href="#library">♫ <span>Library</span></a><a href="#">♡ <span>Liked</span></a></div>
+<div class="cap">Modes</div><div class="side"><a href="#multitask">▣ <span>Multitask</span></a><a href="#">◉ <span>Focus</span></a><a href="#news">◌ <span>Pulse</span></a></div></aside>
+
+<main class="main">
+<section class="hero">
+<div class="heroCard"><div class="kicker">PROJECT 03 · MUSIC COMMAND CENTER</div>
+<h1>Hear it.<br><span>Feel it. Run it.</span></h1>
+<p>SONIQ is a high-energy music platform built for discovery, multitasking and immersive listening — with a cinematic black dashboard and fluid motion system.</p>
+<div class="cta"><a class="btn mainbtn" href="#discover">Explore music</a><a class="btn" href="#multitask">Open multitask ↗</a></div>
+<div class="glow-orb"></div></div>
+<div class="player panel">
+<div class="cover"><div><div class="tracktitle">Paradox</div><div class="trackmeta">MC SQUARE · HUSTLE MODE</div></div></div>
+<div><div class="mini">Now playing · 02:18 / 03:42</div><div class="bar"><i></i></div><div class="controls"><button class="ctrl">↶</button><button class="ctrl">◀</button><button class="ctrl play">▶</button><button class="ctrl">▶</button><button class="ctrl">↷</button></div></div>
+</div>
+</section>
+
+<section id="library" class="panel section"><div class="head"><h2>Quick Queue</h2><div class="mini">12 tracks · smart mix on</div></div>
+<div class="track"><div class="num">01</div><div class="art"></div><div><b>Paradox</b><div class="meta">MC SQUARE · Hip-Hop India</div></div><div class="up">NOW</div><div class="time">03:42</div></div>
+<div class="track"><div class="num">02</div><div class="art a2"></div><div><b>HUSTLE 5.0</b><div class="meta">Hustle Anthem · Rap</div></div><div class="mini">QUEUE</div><div class="time">03:17</div></div>
+<div class="track"><div class="num">03</div><div class="art a3"></div><div><b>AGGSiY — Night Run</b><div class="meta">AggsY · Desi Rap</div></div><div class="mini">QUEUE</div><div class="time">02:56</div></div>
+<div class="track"><div class="num">04</div><div class="art a4"></div><div><b>After Hours</b><div class="meta">Soniq Original · Chill</div></div><div class="mini">QUEUE</div><div class="time">04:06</div></div>
+<div class="track"><div class="num">05</div><div class="art a5"></div><div><b>Voltage</b><div class="meta">Soniq Select · Bass</div></div><div class="mini">QUEUE</div><div class="time">03:28</div></div>
+</section>
+
+<section id="discover" class="section"><div class="head"><h2>Discover your next obsession</h2><div class="mini">AI-curated · Updated now</div></div>
+<div class="chips"><span class="chip hot">🔥 Trending</span><span class="chip">Indian Hip-Hop</span><span class="chip">Rap</span><span class="chip">Workout</span><span class="chip">Night Drive</span><span class="chip">Bass</span><span class="chip">Lo-Fi</span></div>
+<div class="grid">
+<div class="panel discover"><div class="pic p1"></div><h3>Paradox / MC SQUARE</h3><p class="mini">Sharp bars · 1.2M plays</p></div>
+<div class="panel discover"><div class="pic p2"></div><h3>Hustle 5.0</h3><p class="mini">High energy · 980K plays</p></div>
+<div class="panel discover"><div class="pic p3"></div><h3>AGGSiY Sessions</h3><p class="mini">Raw flow · 740K plays</p></div>
+<div class="panel discover"><div class="pic p4"></div><h3>Midnight Voltage</h3><p class="mini">New release · 210K plays</p></div>
+</div></section>
+
+<section id="multitask" class="section"><div class="head"><h2>Multitask without breaking flow</h2><div class="mini">Performance mode · 120Hz+ optimized UI</div></div>
+<div class="dashboard">
+<div class="panel"><div class="head"><h2>Live Visualizer</h2><span class="mini">Smooth motion engine</span></div>
+<div class="visualizer">
+<div class="wave"></div><div class="wave"></div><div class="wave"></div><div class="wave"></div><div class="wave"></div><div class="wave"></div><div class="wave"></div><div class="wave"></div><div class="wave"></div><div class="wave"></div><div class="wave"></div><div class="wave"></div><div class="wave"></div><div class="wave"></div><div class="wave"></div>
+</div></div>
+<div class="multi">
+<div class="task"><b>🎧 Listen + Browse</b><p>Keep playback pinned while exploring artists, playlists and releases.</p><div class="meter"><i></i></div></div>
+<div class="task"><b>📝 Lyrics + Queue</b><p>Read lyrics, reorder tracks and save songs without leaving the player.</p><div class="meter"><i style="width:68%"></i></div></div>
+<div class="task"><b>💬 Social Mode</b><p>React, share and build collaborative queues with friends in one view.</p><div class="meter"><i style="width:91%"></i></div></div>
+<div class="task"><b>⚡ Focus Mode</b><p>Minimal controls, low-distraction visualizer and deep-listening timer.</p><div class="meter"><i style="width:76%"></i></div></div>
+</div>
+</div></section>
+
+<section id="news" class="panel section"><div class="head"><h2>SONIQ Pulse</h2><div class="mini">Culture · Artists · Releases</div></div>
+<div class="newsrow"><b>MC SQUARE momentum: a new generation of Indian hip-hop keeps pushing the sound forward.</b><span>HIP-HOP · 8 MIN AGO</span></div>
+<div class="newsrow"><b>Hustle energy goes cinematic with hard drums, heavy bass and a bigger visual identity.</b><span>RELEASES · 22 MIN AGO</span></div>
+<div class="newsrow"><b>Why animated music dashboards are becoming part of the listening experience.</b><span>DESIGN · 41 MIN AGO</span></div>
+</section>
+
+<footer>Concept UI · Artist/song references shown as demo content · <span class="credit">Design by <span>Rakhi</span></span></footer>
+</main></div>
+</body></html>
