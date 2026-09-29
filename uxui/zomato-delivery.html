@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zomato Delivery</title>
+  <style>
+    html {
+        scroll-behavior: smooth;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      color: #1c1c1c;
+    }
+
+    a { text-decoration: none; }
+
+    .container {
+      width: min(1200px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      background: #fff;
+      border-bottom: 1px solid #eee;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 0;
+      gap: 20px;
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 2rem;
+      color: #e23744;
+      letter-spacing: -2px;
+    }
+
+    .search-wrap {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      max-width: 700px;
+      background: #fff;
+      border: 1px solid #e8e8e8;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+
+    .location {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 16px;
+      background: #fafafa;
+      border-right: 1px solid #eee;
+      color: #444;
+      font-size: 0.95rem;
+      min-width: 180px;
+    }
+
+    .search-box {
+      flex: 1;
+      padding: 14px 16px;
+      border: none;
+      outline: none;
+      font-size: 0.98rem;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .nav-links a {
+      color: #333;
+    }
+
+    .profile {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #f1f1f1;
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      color: #666;
+    }
+
+    .hero {
+      background: linear-gradient(180deg, #fff 0%, #fff9f9 100%);
+      padding: 36px 0 24px;
+    }
+
+    .hero-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 30px;
+    }
+
+    .hero-text {
+      max-width: 560px;
+    }
+
+    .hero-text h1 {
+      margin: 0 0 12px;
+      font-size: clamp(2.4rem, 5vw, 4.2rem);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+    }
+
+    .hero-text p {
+      margin: 0 0 22px;
+      font-size: 1.1rem;
+      color: #555;
+      line-height: 1.7;
+    }
+
+    .cta-row {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 14px 22px;
+      border-radius: 12px;
+      font-weight: 700;
+      transition: 0.2s ease;
+    }
+
+    .btn-primary {
+      background: #e23744;
+      color: #fff;
+      box-shadow: 0 8px 20px rgba(226,55,68,0.2);
+    }
+
+    .btn-secondary {
+      background: #fff;
+      border: 1px solid #ddd;
+      color: #333;
+    }
+
+    .mini-stats {
+      display: flex;
+      gap: 26px;
+      flex-wrap: wrap;
+      color: #333;
+    }
+
+    .mini-stats strong {
+      display: block;
+      font-size: 1.4rem;
+      margin-bottom: 4px;
+    }
+
+    .hero-visual {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+    }
+
+    .food-card {
+      width: min(100%, 430px);
+      background: linear-gradient(135deg, #fff, #fff3f4);
+      border: 1px solid #f0d8db;
+      border-radius: 24px;
+      padding: 18px;
+      box-shadow: 0 16px 34px rgba(0,0,0,0.08);
+    }
+
+    .food-image {
+      height: 260px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #ffd6d9, #ffe8c2, #ffd7a8);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .food-image::before,
+    .food-image::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+    }
+
+    .food-image::before {
+      width: 180px;
+      height: 180px;
+      background: #ffb14b;
+      bottom: -30px;
+      left: -20px;
+    }
+
+    .food-image::after {
+      width: 120px;
+      height: 120px;
+      background: #e23744;
+      right: 30px;
+      top: 16px;
+    }
+
+    .food-badge {
+      position: absolute;
+      left: 18px;
+      top: 18px;
+      background: rgba(255,255,255,0.9);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-weight: 700;
+      color: #333;
+    }
+
+    .food-info {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding-top: 16px;
+    }
+
+    .food-info h3 {
+      margin: 0;
+      font-size: 1.3rem;
+    }
+
+    .rating {
+      background: #1f9d4b;
+      color: #fff;
+      border-radius: 8px;
+      padding: 6px 10px;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .popular {
+      padding: 28px 0;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+    }
+
+    .section-head a {
+      color: #e23744;
+      font-weight: 700;
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 18px;
+    }
+
+    .category-item {
+
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 18px;
+      padding: 18px 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.03);
+      transition: 0.2s ease;
+    }
+    .category-grid .category-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+    }
+
+    .icon-box {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: #ffe4e7;
+      display: grid;
+      place-items: center;
+      font-size: 2rem;
+    }
+
+    .category-item span {
+      font-weight: 700;
+      color: #333;
+    }
+    .cat-link {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+        color: #333;
+        width: 100%;
+    }
+
+    .restaurant-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .restaurant-card {
+      background: #fff;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid #eee;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.04);
+    }
+
+    .restaurant-thumb {
+      height: 170px;
+      background: linear-gradient(135deg, #ffd9ab, #ffb887, #f7d8b3);
+      position: relative;
+    }
+
+    .restaurant-thumb::before {
+      content: "";
+      position: absolute;
+      inset: 12px 22px 18px 22px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.25);
+      border: 1px solid rgba(255,255,255,0.5);
+    }
+
+    .restaurant-body {
+      padding: 16px;
+    }
+
+    .restaurant-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .restaurant-body h3 {
+      margin: 0;
+      font-size: 1.1rem;
+    }
+
+    .badge-green {
+      background: #eaf7ee;
+      color: #1f9d4b;
+      font-size: 0.8rem;
+      font-weight: 800;
+      padding: 4px 8px;
+      border-radius: 8px;
+    }
+
+    .restaurant-meta {
+      color: #666;
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+
+    .cta-section {
+      margin: 36px 0 50px;
+      background: linear-gradient(135deg, #ffebee, #fff5ef);
+      border: 1px solid #f7dfe3;
+      border-radius: 28px;
+      padding: 28px 24px;
+      text-align: center;
+    }
+
+    .cta-section h3 {
+      margin: 0 0 10px;
+      font-size: clamp(1.8rem, 3vw, 2.7rem);
+    }
+
+    .cta-section p {
+      margin: 0 0 18px;
+      color: #555;
+      font-size: 1.05rem;
+    }
+
+    @media (max-width: 900px) {
+      .hero-inner {
+        flex-direction: column;
+        text-align: center;
+      }
+      .hero-text { max-width: 100%; }
+      .cta-row, .mini-stats {
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .nav {
+        flex-wrap: wrap;
+      }
+      .search-wrap {
+        order: 3;
+        width: 100%;
+      }
+      .nav-links {
+        width: 100%;
+        justify-content: space-between;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container nav">
+      <div class="logo">zomato</div>
+
+      <div class="search-wrap">
+        <div class="location">📍 Bengaluru</div>
+        <input class="search-box" type="text" placeholder="Search for restaurant, cuisine or a dish" />
+      </div>
+
+      <div class="nav-links">
+        <a href="#">Log in</a>
+        <a href="#">Sign up</a>
+        <div class="profile">A</div>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-text">
+        <h1>Order food from favourite restaurants near you.</h1>
+        <p>Fresh meals, fast delivery, and a huge selection of local favorites — all in one place.</p>
+
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#order">Order Now</a>
+          <a class="btn btn-secondary" href="#menu">Explore Menu</a>
+        </div>
+
+        <div class="mini-stats">
+          <div><strong>500K+</strong> orders delivered</div>
+          <div><strong>4.8/5</strong> average rating</div>
+          <div><strong>30 min</strong> fast delivery</div>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="food-card">
+          <div class="food-image">
+            <div class="food-badge">Popular</div>
+          </div>
+          <div class="food-info">
+            <h3>Paneer Burst Bowl</h3>
+            <div class="rating">★ 4.8</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main id="menu" class="container popular">
+    <div class="section-head">
+      <h2>Popular cuisines</h2>
+      <a href="#">View all</a>
+    </div>
+
+    <div class="category-grid">
+      <div class="category-item">
+        <a href="https://www.zomato.com/ncr/delivery/dish-burger" class="cat-link">
+          <div class="icon-box">🍔</div>
+          <span>Burgers</span>
+        </a>
+      </div>
+      <div class="category-item">
+        <a href="https://www.zomato.com/ncr/delivery/dish-pizza" class="cat-link">
+          <div class="icon-box">🍕</div>
+          <span>Pizza</span>
+        </a>
+      </div>
+      <div class="category-item">
+        <a href="https://www.zomato.com/ncr/delivery/dish-noodles" class="cat-link">
+          <div class="icon-box">🍜</div>
+          <span>Noodles</span>
+        </a>
+      </div>
+      <div class="category-item">
+        <a href="https://www.zomato.com/ncr/delivery/dish-healthy" class="cat-link">
+          <div class="icon-box">🥗</div>
+          <span>Healthy</span>
+        </a>
+      </div>
+      <div class="category-item">
+        <a href="https://www.zomato.com/ncr/delivery/dish-indian" class="cat-link">
+          <div class="icon-box">🍛</div>
+          <span>Indian</span>
+        </a>
+      </div>
+      <div class="category-item">
+        <a href="https://www.zomato.com/ncr/delivery/dish-desserts" class="cat-link">
+          <div class="icon-box">🧁</div>
+          <span>Desserts</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="section-head" style="margin-top: 38px;">
+      <h2>Popular restaurants</h2>
+      <a href="#">More</a>
+    </div>
+
+    <div class="restaurant-grid">
+      <article class="restaurant-card">
+        <div class="restaurant-thumb"></div>
+        <div class="restaurant-body">
+          <div class="restaurant-row">
+            <h3>Flavor House</h3>
+            <span class="badge-green">4.7</span>
+          </div>
+          <div class="restaurant-meta">North Indian • 25-35 min • ₹399 for two</div>
+        </div>
+      </article>
+
+      <article class="restaurant-card">
+        <div class="restaurant-thumb" style="background: linear-gradient(135deg, #ffd6c0, #ffb38a, #f4d8b8);"></div>
+        <div class="restaurant-body">
+          <div class="restaurant-row">
+            <h3>Green Bowl</h3>
+            <span class="badge-green">4.9</span>
+          </div>
+          <div class="restaurant-meta">Healthy • 20-30 min • ₹499 for two</div>
+        </div>
+      </article>
+
+      <article class="restaurant-card">
+        <div class="restaurant-thumb" style="background: linear-gradient(135deg, #d7f4d5, #b8e9bd, #f7e7b8);"></div>
+        <div class="restaurant-body">
+          <div class="restaurant-row">
+            <h3>Pizza Point</h3>
+            <span class="badge-green">4.8</span>
+          </div>
+          <div class="restaurant-meta">Italian • 30-40 min • ₹599 for two</div>
+        </div>
+      </article>
+
+      <article class="restaurant-card">
+        <div class="restaurant-thumb" style="background: linear-gradient(135deg, #ffd6de, #ffc7cc, #ffe0b2);"></div>
+        <div class="restaurant-body">
+          <div class="restaurant-row">
+            <h3>Sweet Crave</h3>
+            <span class="badge-green">4.6</span>
+          </div>
+          <div class="restaurant-meta">Desserts • 15-25 min • ₹249 for two</div>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <section id="order" class="container cta-section">
+    <h3>Craving something delicious?</h3>
+    <p>Discover local favourites, order instantly, and enjoy meals delivered to your door.</p>
+    <a class="btn btn-primary" href="#">Get Started</a>
+  </section>
+<a href="../index.html" style="position:fixed;left:18px;bottom:18px;z-index:99999;padding:10px 15px;border-radius:999px;background:#17131f;color:#fff;text-decoration:none;font:700 13px Arial;box-shadow:0 10px 25px #0003">← Back to Portfolio</a>
+</body>
+</html>

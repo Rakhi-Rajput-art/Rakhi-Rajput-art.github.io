@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<!-- saved from url=(0031)http://127.0.0.1:5500/game.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nova Drift — Unleash the Unknown</title>
+  <style>
+    :root {
+      --bg: #050816;
+      --bg-2: #0b1120;
+      --panel: rgba(15, 24, 39, 0.9);
+      --panel-strong: #101b2d;
+      --text: #edf6ff;
+      --muted: #9bb3c9;
+      --cyan: #44d7ff;
+      --blue: #5f7cff;
+      --purple: #9c6bff;
+      --green: #58f2c2;
+      --pink: #ff5fd2;
+      --gold: #ffd166;
+      --line: rgba(255,255,255,0.08);
+      --shadow: 0 24px 60px rgba(0, 0, 0, 0.32);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(95,124,255,0.18), transparent 26%),
+        radial-gradient(circle at bottom right, rgba(68,215,255,0.12), transparent 20%),
+        linear-gradient(135deg, var(--bg), var(--bg-2));
+      line-height: 1.6;
+    }
+
+    a { text-decoration: none; }
+
+    .container {
+      width: min(1200px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(5, 8, 22, 0.76);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 18px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .brand-mark {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--pink), var(--purple), var(--cyan));
+      box-shadow: 0 0 18px rgba(68,215,255,0.6);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 24px;
+      border-radius: 12px;
+      font-weight: 700;
+      transition: 0.2s ease;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--cyan), var(--purple));
+      color: #06131b;
+      box-shadow: 0 16px 30px rgba(68, 215, 255, 0.18);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.03);
+      border-color: var(--line);
+      color: var(--text);
+    }
+
+    .hero {
+      padding: 70px 0 30px;
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      background: rgba(68, 215, 255, 0.08);
+      border: 1px solid rgba(68, 215, 255, 0.2);
+      color: var(--cyan);
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border-radius: 999px;
+      padding: 8px 12px;
+      margin-bottom: 18px;
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 0 0 18px;
+      font-size: clamp(3rem, 6vw, 6rem);
+      letter-spacing: -0.07em;
+      line-height: 0.94;
+      max-width: 660px;
+    }
+
+    .hero-copy p {
+      margin: 0 0 28px;
+      max-width: 590px;
+      font-size: 1.08rem;
+      color: var(--muted);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 30px;
+    }
+
+    .hero-metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 26px;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 1.8rem;
+      letter-spacing: -0.04em;
+    }
+
+    .metric span {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .showcase {
+      position: relative;
+      min-height: 560px;
+      padding: 18px;
+      border-radius: 30px;
+      background: linear-gradient(180deg, rgba(18,29,48,0.94), rgba(8,14,23,0.95));
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .showcase::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top center, rgba(68,215,255,0.18), transparent 40%);
+      pointer-events: none;
+    }
+
+    .frame {
+      position: relative;
+      z-index: 1;
+      background: rgba(8, 13, 24, 0.82);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 18px;
+      height: 100%;
+      min-height: 520px;
+    }
+
+    .hud {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .hud .label {
+      color: var(--muted);
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .hud .pill {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(88,242,194,0.08);
+      border: 1px solid rgba(88,242,194,0.18);
+      color: var(--green);
+      font-weight: 700;
+      font-size: 0.78rem;
+    }
+
+    .map {
+      height: 330px;
+      border-radius: 18px;
+      background:
+        linear-gradient(135deg, rgba(68, 215, 255, 0.09), rgba(156,107,255,0.08)),
+        linear-gradient(180deg, rgba(8, 14, 24, 0.8), rgba(9, 18, 27, 0.9));
+      border: 1px solid var(--line);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .map::before,
+    .map::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 30px 30px;
+      opacity: 0.7;
+    }
+
+    .ship {
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      right: 90px;
+      top: 90px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(68,215,255,0.18), rgba(68,215,255,0.05) 45%, transparent 65%);
+      border: 1px solid rgba(68,215,255,0.2);
+      box-shadow: 0 0 30px rgba(68,215,255,0.18);
+    }
+
+    .ship::before {
+      content: "";
+      position: absolute;
+      inset: 22px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(95,124,255,0.35), rgba(68,215,255,0.18));
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .ship::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 24px;
+      height: 24px;
+      transform: translate(-50%, -50%);
+      background: var(--cyan);
+      border-radius: 50%;
+      box-shadow: 0 0 20px rgba(68,215,255,0.8);
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .mini-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 14px 12px;
+    }
+
+    .mini-card .label {
+      display: block;
+      color: var(--muted);
+      font-size: 0.72rem;
+      margin-bottom: 6px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .mini-card strong {
+      font-size: 1.2rem;
+    }
+
+    .brand-strip {
+      padding: 18px 0 6px;
+    }
+
+    .brand-box {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(120px, 1fr));
+      gap: 16px;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 18px 0;
+      text-align: center;
+      color: rgba(237,246,255,0.6);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .section {
+      padding: 88px 0;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: end;
+      margin-bottom: 28px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: clamp(2rem, 3vw, 3rem);
+      letter-spacing: -0.05em;
+      max-width: 700px;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 500px;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .feature-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 24px 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .feature-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      font-size: 1.6rem;
+      background: linear-gradient(135deg, rgba(68,215,255,0.12), rgba(156,107,255,0.16));
+      border: 1px solid rgba(68,215,255,0.16);
+      margin-bottom: 16px;
+    }
+
+    .feature-card h3 {
+      margin: 0 0 8px;
+      font-size: 1.45rem;
+    }
+
+    .feature-card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 0.92fr 1.08fr;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .dark-panel {
+      background: linear-gradient(180deg, rgba(16, 27, 45, 0.94), rgba(8, 14, 23, 1));
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .list {
+      list-style: none;
+      padding: 0;
+      margin: 24px 0 0;
+      display: grid;
+      gap: 14px;
+    }
+
+    .list li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .check {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(88,242,194,0.12);
+      border: 1px solid rgba(88,242,194,0.2);
+      color: var(--green);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+    }
+
+    .panel-visual {
+      min-height: 380px;
+      background: linear-gradient(180deg, rgba(11,19,31,0.96), rgba(13,26,41,0.96));
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .bars {
+      display: flex;
+      align-items: end;
+      gap: 12px;
+      height: 220px;
+      margin: 18px 0 12px;
+    }
+
+    .bar {
+      flex: 1;
+      border-radius: 12px 12px 0 0;
+      background: linear-gradient(180deg, var(--cyan), var(--purple));
+      box-shadow: inset 0 -12px 16px rgba(0,0,0,0.12);
+    }
+
+    .bar:nth-child(1) { height: 26%; }
+    .bar:nth-child(2) { height: 40%; }
+    .bar:nth-child(3) { height: 58%; }
+    .bar:nth-child(4) { height: 80%; }
+    .bar:nth-child(5) { height: 99%; }
+    .bar:nth-child(6) { height: 72%; }
+
+    .summary-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .summary-box {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px 12px;
+    }
+
+    .summary-box .label {
+      display: block;
+      color: var(--muted);
+      font-size: 0.72rem;
+      margin-bottom: 8px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .summary-box strong {
+      font-size: 1.1rem;
+    }
+
+    .cta {
+      margin-top: 16px;
+      padding: 42px 24px;
+      text-align: center;
+      border-radius: 30px;
+      background: linear-gradient(135deg, rgba(68,215,255,0.06), rgba(156,107,255,0.08));
+      border: 1px solid var(--line);
+    }
+
+    .cta h3 {
+      margin: 0 0 12px;
+      font-size: clamp(2rem, 3vw, 3rem);
+      letter-spacing: -0.05em;
+    }
+
+    .cta p {
+      margin: 0 auto 20px;
+      max-width: 620px;
+      color: var(--muted);
+    }
+
+    .footer {
+      padding: 30px 0 52px;
+      text-align: center;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      margin-top: 28px;
+    }
+
+    @media (max-width: 920px) {
+      .hero-inner,
+      .split,
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .brand-box {
+        grid-template-columns: repeat(3, minmax(110px, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .nav {
+        flex-wrap: wrap;
+      }
+
+      .nav-links {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .hero-actions,
+      .hero-metrics,
+      .section-head {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .brand-box,
+      .stats-row,
+      .summary-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container nav">
+      <div class="brand">
+        <span class="brand-mark"></span>
+        <span>Nova Drift</span>
+      </div>
+
+      <nav class="nav-links">
+        <a href="http://127.0.0.1:5500/game.html#features">Features</a>
+        <a href="http://127.0.0.1:5500/game.html#journey">Journey</a>
+        <a href="http://127.0.0.1:5500/game.html#community">Community</a>
+        <a href="http://127.0.0.1:5500/game.html#pricing">Pricing</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="http://127.0.0.1:5500/game.html#" class="btn btn-secondary">Log in</a>
+        <a href="http://127.0.0.1:5500/game.html#" class="btn btn-primary">Play now</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-copy">
+        <div class="eyebrow">New world, new rules</div>
+        <h1>Enter the orbit of legend.</h1>
+        <p>
+          Build your squad, conquer impossible space-rifts, and dominate a universe where every move shapes the next battle.
+        </p>
+
+        <div class="hero-actions">
+          <a href="http://127.0.0.1:5500/game.html#pricing" class="btn btn-primary">Launch the game</a>
+          <a href="http://127.0.0.1:5500/game.html#features" class="btn btn-secondary">See features</a>
+        </div>
+
+        <div class="hero-metrics">
+          <div class="metric">
+            <strong>14M+</strong>
+            <span>players online</span>
+          </div>
+          <div class="metric">
+            <strong>4.9/5</strong>
+            <span>community rating</span>
+          </div>
+          <div class="metric">
+            <strong>120</strong>
+            <span>live modes</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="showcase">
+        <div class="frame">
+          <div class="hud">
+            <div class="label">Deep space run</div>
+            <div class="pill">Survival 92%</div>
+          </div>
+
+          <div class="map">
+            <div class="ship"></div>
+          </div>
+
+          <div class="stats-row">
+            <div class="mini-card">
+              <span class="label">Rank</span>
+              <strong>Legend II</strong>
+            </div>
+            <div class="mini-card">
+              <span class="label">XP</span>
+              <strong>84,200</strong>
+            </div>
+            <div class="mini-card">
+              <span class="label">Skills</span>
+              <strong>26</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="brand-strip">
+    <div class="container brand-box">
+      <div>PixelSky</div>
+      <div>LumaArc</div>
+      <div>GameVerse</div>
+      <div>Vortex</div>
+      <div>OrbitX</div>
+    </div>
+  </div>
+
+  <section id="features" class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2>Built for explorers, hunters, and strategy masters.</h2>
+        <p>Experience a cosmic battlefield crafted with deep progression, fearless combat, and stunning sci-fi design.</p>
+      </div>
+
+      <div class="feature-grid">
+        <article class="feature-card">
+          <div class="feature-icon">🛰️</div>
+          <h3>Open-world missions</h3>
+          <p>Explore alien regions, hidden ruins, and elite boss arenas in a living galaxy full of danger.</p>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-icon">⚔️</div>
+          <h3>Epic combat systems</h3>
+          <p>Build your own combat style with rapid combos, advanced mobility, and customizable weapons.</p>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-icon">👥</div>
+          <h3>Squad alliances</h3>
+          <p>Team up with friends, unlock co-op raids, and climb the global leaderboard together.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="journey" class="section">
+    <div class="container split">
+      <div class="dark-panel">
+        <div class="eyebrow">What makes it special</div>
+        <h2 style="margin: 0; font-size: clamp(2rem, 3vw, 3rem); letter-spacing: -0.05em;">A game world that feels alive.</h2>
+
+        <ul class="list">
+          <li><span class="check">✓</span> Dynamic worlds shaped by mission decisions</li>
+          <li><span class="check">✓</span> Real-time co-op and player-driven events</li>
+          <li><span class="check">✓</span> Deep progression and legendary collectible gear</li>
+        </ul>
+      </div>
+
+      <div class="panel-visual">
+        <div class="hud">
+          <div class="label">Performance</div>
+          <div class="pill">+35% boost</div>
+        </div>
+
+        <div class="bars">
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+        </div>
+
+        <div class="summary-row">
+          <div class="summary-box">
+            <span class="label">Kills</span>
+            <strong>1,482</strong>
+          </div>
+          <div class="summary-box">
+            <span class="label">Wins</span>
+            <strong>312</strong>
+          </div>
+          <div class="summary-box">
+            <span class="label">Missions</span>
+            <strong>68</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing" class="section">
+    <div class="container">
+      <div class="cta">
+        <div class="eyebrow">Ready to begin?</div>
+        <h3>Launch your legend in the new frontier.</h3>
+        <p>Play free, unlock elite gear, and challenge the galaxy with a squad built for victory.</p>
+        <div class="hero-actions" style="justify-content:center; margin-bottom:0;">
+          <a href="http://127.0.0.1:5500/game.html#" class="btn btn-primary">Start free</a>
+          <a href="http://127.0.0.1:5500/game.html#" class="btn btn-secondary">View modes</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">© 2026 Nova Drift. All rights reserved.</div>
+  </footer>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+
+
+<a href="../index.html" style="position:fixed;left:18px;bottom:18px;z-index:99999;padding:10px 15px;border-radius:999px;background:#17131f;color:#fff;text-decoration:none;font:700 13px Arial;box-shadow:0 10px 25px #0003">← Back to Portfolio</a>
+</body></html>
